@@ -1,16 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const env = require('dotenv');
+const cors = require('cors');
 const router = require('./routes/AuthRoutes');
 const roleRouter = require('./routes/RoleRouter');
 const permissionRouter = require('./routes/PermissionRoutes');
 const PORT= 5000;
-const cookieParser=require("cookie-parser")
+
 
 env.config();
-const app =express(); 
+const app =express();
+app.use(cors()); 
 app.use(express.json());
-app.use(cookieParser());
 app.use("/auth",router);
 app.use('/roles',roleRouter);
 app.use("/permissions",permissionRouter);

@@ -4,9 +4,9 @@ const authMiddleware = require('../midlleware/authMiddleware');
 
 const roleRouter = Router();
 
-roleRouter.post('/',authMiddleware,roleController.addRole);
+roleRouter.post('/',roleController.addRole);
 roleRouter.put('/:id',authMiddleware,roleController.updateRole);
-roleRouter.patch('/assign',authMiddleware,roleController.assignRoleUser);
+roleRouter.patch('/assign',roleController.assignRoleUser);
 roleRouter.get('/',roleController.getRoles);
 roleRouter.delete('/:id',roleController.deleteRole);
 
