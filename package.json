@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
-    "dotenv": "^16.4.1"
+    "dotenv": "^16.4.1",
+    "swagger-ui-express": "^5.0.0",
+    "yamljs": "^0.3.0"
   }
 }

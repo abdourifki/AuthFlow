@@ -6,10 +6,20 @@ const router = require('./routes/AuthRoutes');
 const roleRouter = require('./routes/RoleRouter');
 const permissionRouter = require('./routes/PermissionRoutes');
 const PORT= 5000;
+const swaggerui= require ('swagger-ui-express');
+const yaml = require('yamljs');
 
 
 env.config();
 const app =express();
+
+// Swagger documentation setup
+const swaggerDocument = yaml.load('../swagger.yaml');
+app.use('/api-auth', swaggerui.serve, swaggerui.setup(swaggerDocument));
+
+
+
+
 app.use(cors()); 
 app.use(express.json());
 app.use("/auth",router);

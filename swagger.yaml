@@ -1,0 +1,126 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "User Authentication API"
+basePath: "/api"
+tags:
+  - name: "Authentication"
+    description: "Endpoints for user authentication"
+
+paths:
+  /signup:
+    post:
+      summary: "User Registration"
+      description: "Register a new user"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "User registration details"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              username:
+                type: "string"
+              password:
+                type: "string"
+              email:
+                type: "string"
+              role:
+                type: "string"
+              permission:
+                type: "string"
+      responses:
+        201:
+          description: "User registered successfully"
+          schema:
+            type: "object"
+            properties:
+              user:
+                type: "string"
+              role:
+                type: "string"
+        400:
+          description: "Invalid username, password, or email"
+        500:
+          description: "Internal server error"
+
+  /login:
+    post:
+      summary: "User Login"
+      description: "Authenticate a user and generate a JWT token"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "User login details"
+          required: true
+          schema:
+            type: "object"
+            properties:
+              username:
+                type: "string"
+              password:
+                type: "string"
+      responses:
+        201:
+          description: "User logged in successfully"
+          schema:
+            type: "object"
+            properties:
+              token:
+                type: "string"
+              user:
+                type: "object"
+                properties:
+                  username:
+                    type: "string"
+                  email:
+                    type: "string"
+              role:
+                type: "string"
+        401:
+          description: "User not found or password incorrect"
+        501:
+          description: "Error logging in"
+
+  /checkLogin:
+    get:
+      summary: "Check User Login Status"
+      description: "Check if a user is logged in based on the provided JWT token"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          type: "string"
+          required: true
+          description: "JWT token obtained during login"
+      responses:
+        200:
+          description: "User is logged in"
+          schema:
+            type: "object"
+            properties:
+              loggedIn:
+                type: "boolean"
+              user:
+                type: "object"
+                properties:
+                  sub:
+                    type: "string"
+                  username:
+                    type: "string"
+                  email:
+                    type: "string"
+                  role:
+                    type: "string"
+        401:
+          description: "Token not provided or invalid"

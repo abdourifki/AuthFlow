@@ -1,6 +1,7 @@
 
 const User = require('../models/UserSchema');
 const Role = require('../models/RoleSchema');
+const Permission =require('../models/PermissionSchema');
 
 const jwt = require('jsonwebtoken');
 
@@ -13,7 +14,7 @@ const env = require('dotenv');
 // Fonction d'inscription
 const signup = async (req, res) => {
   // Extraire les données de la requête (nom d'utilisateur, mot de passe, email)
-  const { username, password, email,role } = req.body;
+  const { username, password, email,role,permission } = req.body;
 
   console.log(username);
   try {
@@ -76,7 +77,7 @@ const login = async (req, res) => {
 
     // Créer un token JWT avec les informations de l'utilisateur
     const token = jwt.sign(
-      { sub: user._id, username: user.username, email: user.email, role: user.role },
+      { sub: user._id, username: user.username, email: user.email, role: user.role, },
       process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
@@ -86,7 +87,8 @@ const login = async (req, res) => {
     return res.status(201).json({
       token,
       user: { username: user.username, email: user.email},
-      role:user.role.name
+      role:user.role.name,
+      
     });
   } catch (err) {
     // En cas d'erreur, retourner une réponse d'erreur
